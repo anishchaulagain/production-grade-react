@@ -1,4 +1,4 @@
-interface Products{
+export interface Products{
     total: number;
     limit: number;
     offset: number;
