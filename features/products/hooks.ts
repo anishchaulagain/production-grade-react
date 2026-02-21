@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { Products } from "./types";
+
 import { ProductsApi } from "./api";
+import { ProductResponse } from "./types";
 
 export const useProducts = () =>{
-  const [data, setData] = useState<Products[]>([]);
+  const [data, setData] = useState<ProductResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
