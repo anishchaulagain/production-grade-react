@@ -13,3 +13,11 @@ export interface Post{
     "category": string,
     "createdAt": string;
 }
+
+export interface CreatePost{
+    "userId": number;
+    "title": string;
+    "body": string;
+    "tags": string[];
+    "category": string;
+}
