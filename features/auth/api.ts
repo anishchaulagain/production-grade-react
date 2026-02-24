@@ -10,11 +10,23 @@ export const Auth = {
     if (response.status !== 200) {
       throw new Error("Invalid credentials");
     }
-   if(typeof window !== "undefined"){
-    document.cookie = `access_token=${data.accessToken}; path=/; max-age=3600; secure; samesite=strict`;
-    document.cookie = `refresh_token=${data.refreshToken}; path=/; max-age=3600; secure; samesite=strict`;
+    if (typeof window !== "undefined") {
+      document.cookie = `access_token=${data.accessToken}; path=/; max-age=3600; secure; samesite=strict`;
+      document.cookie = `refresh_token=${data.refreshToken}; path=/; max-age=3600; secure; samesite=strict`;
+    }
+    return data;
+  },
 
-   }
+  register: async (email: string, name: string, password: string) => {
+    const response = await api.post("/auth/register", {
+      email,
+      name,
+      password,
+    });
+    if (response.status !== 201) {
+      throw new Error("Can't create account right now");
+    }
+    const { data } = response;
     return data;
   },
 };

@@ -15,3 +15,7 @@ export interface User{
     "updatedAt": string;
     "__v": number;
 }
+
+export interface RegisterResponse{
+    "message": string
+}
