@@ -3,6 +3,7 @@ import { useState } from "react";
 import { LoginResponse } from "./types";
 import { Auth } from "./api";
 import { useRouter } from "next/navigation";
+import { api } from "@/api/client";
 
 export const useAuth = () => {
   const [data, setData] = useState<LoginResponse | null>(null);
@@ -36,5 +37,19 @@ export const useAuth = () => {
     }
   };
 
-  return { data, loading, error, login, register };
+  const otp = async(email: string, otp: string) =>{
+    try {
+        setLoading(true)
+      const response = await Auth.otp(email, otp)
+      setData(response)
+    }
+    catch(err: any){
+        setError(err.message || "OTP Invalid" )
+    }
+    finally{
+        setLoading(false)
+    }
+  }
+
+  return { data, loading, error, login, register, otp };
 };

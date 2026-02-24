@@ -1,10 +1,12 @@
 "use client";
 
+import { useSignupStore } from "@/app/stores/signupStore";
 import { useAuth } from "@/features/auth/hooks";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function SignupPage() {
+     const setEmail = useSignupStore((state) => state.setEmail);
     const router = useRouter()
     const {register} = useAuth()
    const [loading, setLoading] = useState(false);
@@ -23,6 +25,7 @@ export default function SignupPage() {
         setLoading(true);
         const response = await register(data.email as string, data.name as string, data.password as string);
         console.log(response);
+        setEmail(formData.get("email") as string);
         router.push("/otp");
         
     } catch (err: any) {

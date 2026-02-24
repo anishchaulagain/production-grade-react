@@ -1,4 +1,5 @@
 import { api } from "@/api/client";
+import { resolve } from "path";
 
 export const Auth = {
   login: async (email: string, password: string) => {
@@ -29,4 +30,24 @@ export const Auth = {
     const { data } = response;
     return data;
   },
+
+  logout: () =>{
+    if (typeof window !== "undefined") {
+      document.cookie = `access_token=; path=/; max-age=0; secure; samesite=strict`;
+      document.cookie = `refresh_token=; path=/; max-age=0; secure; samesite=strict`;
+    }
+    api.defaults.headers.common["Authorization"] = "";
+    return true
+  },
+
+  otp : async(email: string, otp: string)=>{
+    const response = await api.post("/auth/verify-otp", {
+      email, otp
+    })
+    if(response.status !== 200) {
+      throw new Error("Can't send OTP")
+    }
+      const {data} = response
+      return data;
+  }
 };

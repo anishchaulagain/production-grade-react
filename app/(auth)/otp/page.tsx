@@ -1,15 +1,21 @@
 "use client";
 
+import { useSignupStore } from "@/app/stores/signupStore";
+import { Auth } from "@/features/auth/api";
+import { useAuth } from "@/features/auth/hooks";
+import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 
 export default function OtpPage() {
   const OTP_LENGTH = 6;
   const [otp, setOtp] = useState<string[]>(Array(OTP_LENGTH).fill(""));
   const inputsRef = useRef<HTMLInputElement[]>([]);
+  const {otp: verifyOtp, loading} = useAuth()
+  const router = useRouter();
 
   const handleChange = (value: string, index: number) => {
     if (!/^\d?$/.test(value)) return;
-
+    
     const newOtp = [...otp];
     newOtp[index] = value;
     setOtp(newOtp);
@@ -37,10 +43,16 @@ export default function OtpPage() {
 
     inputsRef.current[Math.min(pasted.length, OTP_LENGTH - 1)]?.focus();
   };
-
-  const handleSubmit = () => {
+ const email = useSignupStore((state) => state.email);
+  const clear = useSignupStore((state) => state.clear);
+  const handleSubmit = async() => {
     const finalOtp = otp.join("");
-    console.log("Entered OTP:", finalOtp);
+    console.log("Submitting OTP:", finalOtp, "for email:", email);
+    const response = await verifyOtp(email, finalOtp);
+    console.log("OTP verification response:", response);
+    clear();
+    router.push("/dashboard");
+    
   };
 
   return (
@@ -76,7 +88,7 @@ export default function OtpPage() {
           onClick={handleSubmit}
           className="mt-6 w-full rounded-lg bg-indigo-600 py-2.5 text-white font-medium transition hover:bg-indigo-700"
         >
-          Verify OTP
+          {loading ? "Verifying..." : "Verify OTP"}
         </button>
 
         <p className="mt-4 text-center text-sm text-gray-500">
