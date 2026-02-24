@@ -20,6 +20,7 @@ export default function SignupPage() {
     };
     console.log("Form data:", data);
     try{
+        setLoading(true);
         const response = await register(data.email as string, data.name as string, data.password as string);
         console.log(response);
         router.push("/otp");
@@ -27,8 +28,10 @@ export default function SignupPage() {
     } catch (err: any) {
         setError(err.message || "Registration failed");
 
+    }finally{
+        setLoading(false)
     }
-    setTimeout(() => setLoading(false), 1000);
+    // setTimeout(() => setLoading(false), 1000);
   };
 
   return (
