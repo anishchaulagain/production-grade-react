@@ -50,7 +50,7 @@ export default function OtpPage() {
     console.log("Submitting OTP:", finalOtp, "for email:", email);
     const response = await verifyOtp(email, finalOtp);
     console.log("OTP verification response:", response);
-    clear();
+    clear();   
     router.push("/dashboard");
     
   };

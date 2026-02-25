@@ -31,23 +31,29 @@ export const Auth = {
     return data;
   },
 
-  logout: () =>{
+  logout: () => {
     if (typeof window !== "undefined") {
       document.cookie = `access_token=; path=/; max-age=0; secure; samesite=strict`;
       document.cookie = `refresh_token=; path=/; max-age=0; secure; samesite=strict`;
     }
     api.defaults.headers.common["Authorization"] = "";
-    return true
+    return true;
   },
 
-  otp : async(email: string, otp: string)=>{
+  otp: async (email: string, otp: string) => {
     const response = await api.post("/auth/verify-otp", {
-      email, otp
-    })
-    if(response.status !== 200) {
-      throw new Error("Can't send OTP")
+      email,
+      otp,
+    });
+    if (response.status !== 200) {
+      throw new Error("Can't send OTP");
     }
-      const {data} = response
-      return data;
-  }
+    const { data } = response;
+    if (typeof window !== "undefined") {
+      document.cookie = `access_token=${data.accessToken}; path=/; max-age=3600; secure; samesite=strict`;
+      document.cookie = `refresh_token=${data.refreshToken}; path=/; max-age=3600; secure; samesite=strict`;
+    }
+
+    return data;
+  },
 };
