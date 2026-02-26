@@ -1,7 +1,5 @@
 export interface LoginResponse{
-    accessToken: string;
-    refreshToken: string;
-    user: User[];
+    message: string;
 }
 
 export interface User{

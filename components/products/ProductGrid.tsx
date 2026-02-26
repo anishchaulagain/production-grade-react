@@ -4,15 +4,16 @@ import { useProductQuery } from "@/features/products/composables/useProductQuery
 import { useEffect } from "react";
 
 
-const ProductsPage = () => {
+const ListProducts = () => {
   const { loading, data, error, fetchProducts} = useProductQuery()
 
   useEffect(()=>{
     fetchProducts()
   }, [])
+
     return (
         <div>
-            <h1>Products Page</h1>
+            <h1>Products List</h1>
             {loading && <p>Loading...</p>}
             {error && <p>Error: {error}</p>}
             {data && (
@@ -29,4 +30,4 @@ const ProductsPage = () => {
     );
 };
 
-export default ProductsPage;
+export default ListProducts;

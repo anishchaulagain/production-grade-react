@@ -1,11 +1,14 @@
 'use client'
 import { useAuth } from "@/features/auth/hooks";
+import { routerServerGlobal } from "next/dist/server/lib/router-utils/router-server-context";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const {login, loading, error} = useAuth();
+  const router = useRouter()
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -13,8 +16,8 @@ export default function Login() {
     const user = login(email, password);
     if(user){
         console.log("login successful", user)
+         router.push("/")
     }
-
    }
    catch(err){
     console.log("login error", error)
@@ -65,7 +68,7 @@ export default function Login() {
             type="submit"
             className="w-full bg-indigo-600 text-white py-2 rounded-lg font-medium hover:bg-indigo-700 transition"
           >
-            Login
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
 
