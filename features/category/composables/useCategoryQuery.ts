@@ -11,11 +11,13 @@ export const useCategoryQuery = () =>{
         setLoading(true)
         try{
             const response = await CategoryService.getCategories()
-            setData(response)
+            return response.categories
         }catch(err: unknown){
             if(err instanceof Error){
                 setError(err.message || "Failed to fetch categories")
+                throw err
             }
+            throw new Error("An unknown error occurred")
         }finally{
             setLoading(false)
         }
