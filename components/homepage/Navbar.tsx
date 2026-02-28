@@ -34,7 +34,7 @@ export default function Navbar() {
             href="/"
             className="text-xl font-bold tracking-tight text-gray-900"
           >
-            ShopSphere
+            AnishShop
           </Link>
 
           {/* Search Bar (Desktop) */}
@@ -99,7 +99,7 @@ export default function Navbar() {
             ) : (
               <Link href="/login">
                 <Button variant="default">
-                  Login
+                  Shop Now
                 </Button>
               </Link>
             )}

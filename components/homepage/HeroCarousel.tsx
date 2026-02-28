@@ -12,6 +12,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
+import { useHeroSliderQuery } from "@/features/hero-slider/composables/useHeroSliderQuery"
 
 const offers = [
   {
@@ -48,6 +49,20 @@ export default function HeroCarousel() {
     Autoplay({ delay: 4000, stopOnInteraction: false })
   )
 
+  const {data, loading, error, fetchHeroSliderData} = useHeroSliderQuery()
+
+  React.useEffect(()=>{
+    fetchHeroSliderData()
+  }, [])
+
+  if(loading){
+    return <div>Loading...</div>
+  }
+
+  if(error){
+    return <div>Error: {error}</div>
+  }
+
   return (
     <section className="relative w-full">
       <Carousel
@@ -56,13 +71,13 @@ export default function HeroCarousel() {
         opts={{ loop: true }}
       >
         <CarouselContent>
-          {offers.map((offer) => (
-            <CarouselItem key={offer.id}>
+          {data?.map((offer) => (
+            <CarouselItem key={offer._id}>
               <div className="relative h-[65vh] w-full overflow-hidden">
 
                 {/* Background Image */}
                 <Image
-                  src={offer.image}
+                  src={offer.imageUrl}
                   alt={offer.title}
                   fill
                   priority
@@ -70,26 +85,26 @@ export default function HeroCarousel() {
                 />
 
                 {/* Overlay */}
-                <div className="absolute inset-0 bg-black/50" />
+                {/* <div className="absolute inset-0 bg-black/50" /> */}
 
                 {/* Content */}
-                <div className="relative z-10 flex h-full items-center">
+                {/* <div className="relative z-10 flex h-full items-center">
                   <div className="mx-auto max-w-7xl px-6 text-white">
                     <h1 className="text-4xl font-bold md:text-6xl">
                       {offer.title}
                     </h1>
                     <p className="mt-4 max-w-xl text-lg text-gray-200">
-                      {offer.description}
+                      {offer.subtitle}
                     </p>
 
                     <Link
-                      href={offer.link}
+                      href={offer.ctaLink}
                       className="mt-6 inline-block rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:bg-gray-200"
                     >
-                      {offer.cta}
+                      {offer.ctaText}
                     </Link>
                   </div>
-                </div>
+                </div> */}
               </div>
             </CarouselItem>
           ))}
