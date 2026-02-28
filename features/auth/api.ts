@@ -58,4 +58,15 @@ export const Auth = {
 
     return data;
   },
+
+  me: async()=>{
+    const response = await api.get("/auth/me", {
+      withCredentials: true
+    })
+    if(response.status !== 200){
+      throw new Error("Can't get user info")
+    }
+    const {data} = response
+    return data
+  }
 };

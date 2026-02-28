@@ -1,14 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, X, ShoppingCart, User, Search } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/features/auth/hooks";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
   const router = useRouter();
+  const {UserDetail, user, isAuthenticated , logout} = useAuth()
+
+  useEffect(() => {
+    UserDetail();
+  }, []);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -73,9 +79,29 @@ export default function Navbar() {
             </Link>
 
             {/* Profile */}
-            <Link href="/account">
-              <User className="h-5 w-5 text-gray-700 hover:text-black transition" />
-            </Link>
+            {isAuthenticated ? (
+              <div className="flex items-center gap-4">
+                <Link href="/account" className="flex items-center gap-2">
+                  <User className="h-5 w-5 text-gray-700 hover:text-black transition" />
+                  <span className="font-medium">Welcome, {user?.name}</span>
+                </Link>
+                <button
+                  onClick={() => {
+                    logout();
+                    router.push("/");
+                  }}
+                  className="bg-red-500 text-white px-6 py-2 rounded-full hover:bg-red-600 transition"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <Link href="/login">
+                <button className="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-800 transition">
+                  Login
+                </button>
+              </Link>
+            )}
           </div>
 
           {/* Mobile Button */}
