@@ -6,6 +6,8 @@ export const Auth = {
     const response = await api.post("/auth/login", {
       email,
       password,
+    }, {
+      withCredentials: true
     });
     const { data } = response;
     if (response.status !== 200) {
