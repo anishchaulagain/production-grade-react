@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { Menu, X, ShoppingCart, User, Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/features/auth/hooks";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,7 +26,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b py-4 bg-white/70 backdrop-blur-md">
+    <nav className="sticky top-0 z-50 w-full border-b py-4 bg-white">
       <div className="mx-auto max-w-full px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
@@ -42,7 +44,7 @@ export default function Navbar() {
           >
             <div className="relative w-full">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-              <input
+              <Input
                 type="text"
                 placeholder="Search products..."
                 value={query}
@@ -85,21 +87,20 @@ export default function Navbar() {
                   <User className="h-5 w-5 text-gray-700 hover:text-black transition" />
                   <span className="font-medium">Welcome, {user?.name}</span>
                 </Link>
-                <button
+                <Button variant="default"
                   onClick={() => {
                     logout();
                     router.push("/");
                   }}
-                  className="bg-red-500 text-white px-6 py-2 rounded-full hover:bg-red-600 transition"
                 >
                   Logout
-                </button>
+                </Button>
               </div>
             ) : (
               <Link href="/login">
-                <button className="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-800 transition">
+                <Button variant="default">
                   Login
-                </button>
+                </Button>
               </Link>
             )}
           </div>
