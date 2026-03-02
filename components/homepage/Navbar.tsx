@@ -7,12 +7,14 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/features/auth/hooks";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import { useShoppingCart } from "use-shopping-cart";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
   const router = useRouter();
   const {UserDetail, user, isAuthenticated , logout} = useAuth()
+  const { cartCount } = useShoppingCart();
 
   useEffect(() => {
     UserDetail();
@@ -76,7 +78,7 @@ export default function Navbar() {
             <Link href="/cart" className="relative">
               <ShoppingCart className="h-5 w-5 text-gray-700" />
               <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-black text-xs text-white">
-                3
+                {cartCount || 0}
               </span>
             </Link>
 
