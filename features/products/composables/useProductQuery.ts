@@ -1,11 +1,12 @@
 import { useState } from "react"
-import {  ProductResponse } from "../types"
+import {  Product, ProductResponse } from "../types"
 import { ProductService } from "../api"
 
 export const useProductQuery = () =>{
     const [data, setData] = useState<ProductResponse | null>(null)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
+    const [product, setProduct] = useState<Product | null>(null)
 
     const fetchProducts = async() =>{
         setLoading(true)
@@ -33,7 +34,7 @@ export const useProductQuery = () =>{
         setLoading(true)
         try{
             const response = await ProductService.getProductBySlug(slug)
-            setData(response)
+            setProduct(response)
             setError(null)
             return response
         }
@@ -49,5 +50,5 @@ export const useProductQuery = () =>{
         }
     }
     
-    return {data, loading, error, fetchProducts, fetchProductBySlug }
+    return {data, loading, error, fetchProducts, fetchProductBySlug, product }
 }
