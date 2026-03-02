@@ -28,5 +28,26 @@ export const useProductQuery = () =>{
             }
         
     }
+
+    const fetchProductBySlug = async(slug: string)=>{
+        setLoading(true)
+        try{
+            const response = await ProductService.getProductBySlug(slug)
+            setData(response)
+            setError(null)
+            return response
+        }
+        catch (err: unknown) {
+    const message =
+      err instanceof Error ? err.message : "Failed to fetch product by slug"
+
+    setError(message)
+    return null
+        }
+        finally{
+            setLoading(false)
+        }
+    }
+    
     return {data, loading, error, fetchProducts}
 }
