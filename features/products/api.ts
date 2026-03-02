@@ -9,4 +9,9 @@ export const ProductService = {
     const { data} = response;
     return data;
   },
+
+  getProductBySlug: async(slug:string)=>{
+    const response = await api.get(`/products/slug/${slug}`)
+    return response.data
+  }
 };
