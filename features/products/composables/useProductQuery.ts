@@ -49,5 +49,5 @@ export const useProductQuery = () =>{
         }
     }
     
-    return {data, loading, error, fetchProducts}
+    return {data, loading, error, fetchProducts, fetchProductBySlug }
 }
