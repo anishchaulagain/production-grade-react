@@ -13,6 +13,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel"
 import { useHeroSliderQuery } from "@/features/hero-slider/composables/useHeroSliderQuery"
+import HeroCarouselSkeleton from "./HeroCarouselSkeleton"
 
 const offers = [
   {
@@ -56,7 +57,7 @@ export default function HeroCarousel() {
   }, [])
 
   if(loading){
-    return <div>Loading...</div>
+    return <div><HeroCarouselSkeleton/></div>
   }
 
   if(error){
