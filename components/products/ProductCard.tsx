@@ -8,7 +8,7 @@ export default function ProductCard({ product }: { product: Product }) {
     router.push(`/products/${slug}`)
   }
   return (
-    <div className="border rounded-xl p-3 hover:shadow-md transition" onClick={()=>handleProductCard(product.slug)}>
+    <div className="border rounded-xl cursor-pointer p-3 hover:shadow-md transition" onClick={()=>handleProductCard(product.slug)}>
       <img
         src={product.imageUrl}
         alt={product.name}
