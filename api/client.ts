@@ -12,7 +12,8 @@ export const api =  axios.create({
 
 api.interceptors.response.use((res)=> res,
 (err) => {
-    const {detail} = err.response.data
-    console.log("API Error", detail)
-    return Promise.reject(err)
+    const errorMessage = err.response?.data?.message || err.response?.data?.detail || "An unexpected error occurred";
+    console.log("API Error:", errorMessage);
+    err.message = errorMessage; // Override axios error message with API's message
+    return Promise.reject(err);
 })

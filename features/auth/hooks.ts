@@ -12,12 +12,15 @@ export const useAuth = () => {
   const login = async (email: string, password: string) => {
     try {
       setLoading(true);
+      setError(null);
       const response = await Auth.login(email, password);
       setData(response);
       setIsAuthenticated(true);
-      setError(null);
+      return response;
     } catch (err: any) {
-      setError(err.message || "Login failed");
+      const errorMessage = err.message || "Login failed";
+      setError(errorMessage);
+      throw err; // Re-throw to allow caller to handle if needed
     } finally {
       setLoading(false);
     }
