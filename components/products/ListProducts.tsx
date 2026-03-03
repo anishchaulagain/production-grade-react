@@ -5,6 +5,7 @@ import { useProductQuery } from "@/features/products/composables/useProductQuery
 import { useCategoryQuery } from "@/features/category/composables/useCategoryQuery"
 import { mapCategoriesWithProducts } from "@/shared/mapcategorywithproduct/MapCategoriesWithProducts"
 import CategorySection from "../categorysection/CategorySection"
+import ListProductsSkeleton from "./ListProductsSkeleton"
 
 const ListProducts = () => {
   const { fetchProducts, loading: productLoading } = useProductQuery()
@@ -37,7 +38,7 @@ const ListProducts = () => {
   }, [])
 
   if (productLoading || categoryLoading) {
-    return <div>Loading...</div>
+    return <div><ListProductsSkeleton/></div>
   }
 
   if (error) {
