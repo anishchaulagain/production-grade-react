@@ -3,6 +3,7 @@
 
 import AddToCart from "@/components/products/AddToCart"
 import ImageGallery from "@/components/products/ImageGallery"
+import ProductPageSkeleton from "@/components/products/ProductPageSkeleton"
 import { Button } from "@/components/ui/button"
 import { useProductQuery } from "@/features/products/composables/useProductQuery"
 import { Star, Truck, Loader2 } from "lucide-react"
@@ -22,8 +23,8 @@ export default function ProductPage({
 
   if (loading) {
     return (
-      <div className="flex min-h-[400px] items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
+      <div>
+        <ProductPageSkeleton/>
       </div>
     )
   }
@@ -45,7 +46,7 @@ export default function ProductPage({
   }
 
   return (
-    <div>
+    <div className="max-w-full mx-auto px-6 py-10">
       <div className="bg-white">
         <div className="mx-auto max-w-screen-xl px-4 md:px-8">
           <div className="grid gap-8 md:grid-cols-2">
